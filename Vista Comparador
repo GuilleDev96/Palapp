@@ -1,0 +1,139 @@
+import 'package:flutter/material.dart';
+
+class VistaComparador extends StatelessWidget {
+  const VistaComparador({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Padding(
+          padding: EdgeInsets.fromLTRB(16, 16, 16, 24),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Comparador',
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+        Expanded(
+          child: Row(
+            children: [
+              const _ColumnaPala(
+                marca: 'BULLPADEL',
+                modelo: 'Hack 03',
+                precio: '188€',
+                forma: 'Diamante',
+                balance: 'Alto',
+                tacto: 'Duro',
+                imagenUrl: 'https://www.padelproshop.com/13101-large_default/pala-bullpadel-hack-03-24.jpg',
+              ),
+              Container(width: 1, color: Colors.grey.shade300),
+              const _ColumnaPala(
+                marca: 'NOX',
+                modelo: 'AT10 Luxury',
+                precio: '252€',
+                forma: 'Lágrima',
+                balance: 'Medio',
+                tacto: 'Medio',
+                imagenUrl: 'https://www.padelproshop.com/12975-large_default/nox-at10-luxury-genius-18k-alum-2024.jpg',
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ColumnaPala extends StatelessWidget {
+  final String marca;
+  final String modelo;
+  final String precio;
+  final String forma;
+  final String balance;
+  final String tacto;
+  final String imagenUrl;
+
+  const _ColumnaPala({
+    required this.marca,
+    required this.modelo,
+    required this.precio,
+    required this.forma,
+    required this.balance,
+    required this.tacto,
+    required this.imagenUrl,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          children: [
+            Container(
+              height: 120,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: const Color(0xFFF8F9FA),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.network(
+                  imagenUrl,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.sports_tennis, size: 50, color: Colors.grey),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(marca, style: const TextStyle(color: Colors.grey, fontSize: 10, fontWeight: FontWeight.bold)),
+            Text(modelo, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16), textAlign: TextAlign.center),
+            const SizedBox(height: 8),
+            Text(precio, style: const TextStyle(color: Color(0xFF00C853), fontWeight: FontWeight.bold, fontSize: 20)),
+            const SizedBox(height: 24),
+            _FilaAtributo(titulo: 'Forma', valor: forma),
+            _FilaAtributo(titulo: 'Balance', valor: balance),
+            _FilaAtributo(titulo: 'Tacto', valor: tacto),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                side: const BorderSide(color: Color(0xFF007AC2)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                elevation: 0,
+              ),
+              child: const Text('Cambiar', style: TextStyle(color: Color(0xFF007AC2))),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FilaAtributo extends StatelessWidget {
+  final String titulo;
+  final String valor;
+
+  const _FilaAtributo({required this.titulo, required this.valor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        children: [
+          Text(titulo, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+          const SizedBox(height: 4),
+          Text(valor, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+          const Divider(),
+        ],
+      ),
+    );
+  }
+}
