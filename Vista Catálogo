@@ -1,0 +1,321 @@
+import 'package:flutter/material.dart';
+import 'vistas_detalle.dart';
+
+class VistaCatalogo extends StatelessWidget {
+  const VistaCatalogo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
+          child: Text(
+            'Catálogo',
+            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            '4 palas disponibles',
+            style: TextStyle(color: Colors.grey, fontSize: 14),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Buscar modelo, marca...',
+                    prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.grey[300]!),
+                ),
+                child: IconButton(
+                  icon: const Icon(Icons.tune),
+                  onPressed: () {},
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 40,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            children: const [
+              ChipFiltro(texto: 'Todos', activo: true),
+              ChipFiltro(texto: 'Iniciación', activo: false),
+              ChipFiltro(texto: 'Intermedio', activo: false),
+              ChipFiltro(texto: 'Avanzado', activo: false),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+        Expanded(
+          child: GridView.count(
+            crossAxisCount: 2,
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 140),
+            childAspectRatio: 0.65,
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 16,
+            children: const [
+              TarjetaCatalogo(
+                descuento: '-35%',
+                marca: 'BULLPADEL',
+                modelo: 'Hack 03',
+                nivel: 'Avanzado',
+                precioActual: '188€',
+                precioAntiguo: '289€',
+                imagenUrl: 'https://www.padelproshop.com/13101-large_default/pala-bullpadel-hack-03-24.jpg',
+                heroTag: 'catalogo_1',
+              ),
+              TarjetaCatalogo(
+                descuento: '-28%',
+                marca: 'NOX',
+                modelo: 'AT10 Luxury',
+                nivel: 'Avanzado',
+                precioActual: '252€',
+                precioAntiguo: '350€',
+                imagenUrl: 'https://www.padelproshop.com/12975-large_default/nox-at10-luxury-genius-18k-alum-2024.jpg',
+                heroTag: 'catalogo_2',
+              ),
+              TarjetaCatalogo(
+                descuento: '-20%',
+                marca: 'HEAD',
+                modelo: 'Delta Pro',
+                nivel: 'Intermedio',
+                precioActual: '159€',
+                precioAntiguo: '199€',
+                imagenUrl: 'https://www.padelproshop.com/8306-large_default/pala-head-graphene-360-delta-pro.jpg',
+                heroTag: 'catalogo_3',
+              ),
+              TarjetaCatalogo(
+                descuento: '-42%',
+                marca: 'ADIDAS',
+                modelo: 'Metalbone 3.3',
+                nivel: 'Avanzado',
+                precioActual: '244€',
+                precioAntiguo: '420€',
+                imagenUrl: 'https://www.padelproshop.com/13596-large_default/pala-adidas-metalbone-33-2024.jpg',
+                heroTag: 'catalogo_4',
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class ChipFiltro extends StatelessWidget {
+  final String texto;
+  final bool activo;
+
+  const ChipFiltro({
+    super.key,
+    required this.texto,
+    required this.activo,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: activo ? const Color(0xFF007AC2) : Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: activo ? const Color(0xFF007AC2) : Colors.grey[300]!),
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        texto,
+        style: TextStyle(
+          color: activo ? Colors.white : Colors.grey[600],
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+        ),
+      ),
+    );
+  }
+}
+
+class TarjetaCatalogo extends StatelessWidget {
+  final String descuento;
+  final String marca;
+  final String modelo;
+  final String nivel;
+  final String precioActual;
+  final String precioAntiguo;
+  final String imagenUrl;
+  final String heroTag;
+
+  const TarjetaCatalogo({
+    super.key,
+    required this.descuento,
+    required this.marca,
+    required this.modelo,
+    required this.nivel,
+    required this.precioActual,
+    required this.precioAntiguo,
+    required this.imagenUrl,
+    required this.heroTag,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => VistaDetalle(
+              heroTag: heroTag,
+              imagenUrl: imagenUrl,
+              marca: marca,
+              modelo: modelo,
+              precioActual: precioActual,
+              precioAntiguo: precioAntiguo,
+            ),
+          ),
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.04),
+              blurRadius: 24,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFF8F9FA),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                ),
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Hero(
+                          tag: heroTag,
+                          child: Image.network(
+                            imagenUrl,
+                            fit: BoxFit.contain,
+                            errorBuilder: (context, error, stackTrace) => const Icon(Icons.sports_tennis, size: 50, color: Colors.grey),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 8,
+                      left: 8,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFF4444),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          descuento,
+                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: CircleAvatar(
+                        radius: 14,
+                        backgroundColor: Colors.white,
+                        child: Icon(Icons.favorite_border, size: 16, color: Colors.grey[400]),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    marca,
+                    style: const TextStyle(color: Colors.grey, fontSize: 10, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    modelo,
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE8F5E9),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      nivel,
+                      style: const TextStyle(color: Color(0xFF007AC2), fontSize: 10, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Text(
+                        precioActual,
+                        style: const TextStyle(color: Color(0xFF00C853), fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        precioAntiguo,
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 11,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
