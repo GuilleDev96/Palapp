@@ -1,0 +1,139 @@
+import 'package:flutter/material.dart';
+
+class VistaPerfil extends StatelessWidget {
+  const VistaPerfil({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          // 1. Cabecera del Perfil
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 32),
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(32)),
+            ),
+            child: Column(
+              children: [
+                const CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Color(0xFFE0E0E0),
+                  child: Icon(Icons.person, size: 60, color: Colors.grey),
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Usuario Palapp',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 4),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE8F5E9),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Text(
+                    'Nivel Intermedio',
+                    style: TextStyle(color: Color(0xFF007AC2), fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          // 2. Opciones de Cuenta (Estilo Lista)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Mi Cuenta',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey),
+                ),
+                const SizedBox(height: 16),
+                _OpcionMenu(icono: Icons.favorite_border, texto: 'Mis Favoritos', colorIcono: Colors.red),
+                _OpcionMenu(icono: Icons.history, texto: 'Historial de búsquedas', colorIcono: Colors.blue),
+                _OpcionMenu(icono: Icons.notifications_none, texto: 'Alertas de precio', colorIcono: Colors.orange),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 32),
+
+          // 3. Soporte y Ajustes
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Ajustes y Soporte',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey),
+                ),
+                const SizedBox(height: 16),
+                const _OpcionMenu(icono: Icons.help_outline, texto: 'Centro de ayuda', colorIcono: Colors.grey),
+                const _OpcionMenu(icono: Icons.description_outlined, texto: 'Términos y condiciones', colorIcono: Colors.grey),
+                _OpcionMenu(
+                  icono: Icons.logout, 
+                  texto: 'Cerrar sesión', 
+                  colorIcono: Colors.red.shade300, 
+                  mostrarFlecha: false
+                ),
+              ],
+            ),
+          ),
+          
+          const SizedBox(height: 40),
+        ],
+      ),
+    );
+  }
+}
+
+// Widget auxiliar para las filas de opciones
+class _OpcionMenu extends StatelessWidget {
+  final IconData icono;
+  final String texto;
+  final Color colorIcono;
+  final bool mostrarFlecha;
+
+  const _OpcionMenu({
+    required this.icono,
+    required this.texto,
+    required this.colorIcono,
+    this.mostrarFlecha = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: ListTile(
+        leading: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: colorIcono.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(icono, color: colorIcono, size: 20),
+        ),
+        title: Text(
+          texto,
+          style: const TextStyle(fontWeight: FontWeight.w600),
+        ),
+        trailing: mostrarFlecha ? const Icon(Icons.chevron_right, color: Colors.grey) : null,
+        onTap: () {}, // De momento no hace nada
+      ),
+    );
+  }
+}
